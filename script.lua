@@ -1,5 +1,5 @@
 -- ==============================================================================
--- 🌠 Star Executor - Arceus X Compatible Version (Fixed Fling & Teleports)
+-- 🌠 Star Executor - Arceus X Compatible Version (Infinite Yield Added)
 -- ==============================================================================
 
 if not game:IsLoaded() then 
@@ -137,7 +137,7 @@ Tab1Corner.Parent = TabButton1
 local TabButton2 = Instance.new("TextButton")
 TabButton2.Size = UDim2.new(0, 175, 0, 32)
 TabButton2.Position = UDim2.new(1, -195, 0, 48)
-TabButton2.Text = "🎯 MM2 & Teleports"
+TabButton2.Text = "🎯 MM2 & Extra"
 TabButton2.TextColor3 = Color3.fromRGB(200, 200, 200)
 TabButton2.TextSize = 13
 TabButton2.Font = SelectedFont
@@ -161,7 +161,7 @@ Container1.Visible = true
 Container1.ZIndex = 3
 Container1.Parent = MainFrame
 
--- CONTAINER 2: MM2 & TELEPORTS
+-- CONTAINER 2: MM2 & EXTRA
 local Container2 = Instance.new("ScrollingFrame")
 Container2.Size = UDim2.new(0, 360, 0, 410)
 Container2.Position = UDim2.new(0, 20, 0, 88)
@@ -321,7 +321,7 @@ FullbrightButton.ZIndex = 3
 FullbrightButton.Parent = Container1
 Instance.new("UICorner", FullbrightButton).CornerRadius = UDim.new(0, 8)
 
--- --- CONTAINER 2 ELEMENTS (MM2 & TELEPORTS SEPARATED) ---
+-- --- CONTAINER 2 ELEMENTS (MM2 & INFINITE YIELD) ---
 local MM2EspButton = Instance.new("TextButton")
 MM2EspButton.Size = UDim2.new(0, 360, 0, 42)
 MM2EspButton.Position = UDim2.new(0, 0, 0, 0)
@@ -346,33 +346,22 @@ TpGunButton.ZIndex = 3
 TpGunButton.Parent = Container2
 Instance.new("UICorner", TpGunButton).CornerRadius = UDim.new(0, 8)
 
-local TpMapButton = Instance.new("TextButton")
-TpMapButton.Size = UDim2.new(0, 360, 0, 42)
-TpMapButton.Position = UDim2.new(0, 0, 0, 104)
-TpMapButton.Text = "🗺️ Teleport to Map (MM2)"
-TpMapButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-TpMapButton.TextSize = 13
-TpMapButton.Font = SelectedFont
-TpMapButton.BackgroundColor3 = Color3.fromRGB(70, 130, 50)
-TpMapButton.ZIndex = 3
-TpMapButton.Parent = Container2
-Instance.new("UICorner", TpMapButton).CornerRadius = UDim.new(0, 8)
-
-local TpLobbyButton = Instance.new("TextButton")
-TpLobbyButton.Size = UDim2.new(0, 360, 0, 42)
-TpLobbyButton.Position = UDim2.new(0, 0, 0, 156)
-TpLobbyButton.Text = "🏠 Teleport to Lobby (MM2)"
-TpLobbyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-TpLobbyButton.TextSize = 13
-TpLobbyButton.Font = SelectedFont
-TpLobbyButton.BackgroundColor3 = Color3.fromRGB(50, 140, 140)
-TpLobbyButton.ZIndex = 3
-TpLobbyButton.Parent = Container2
-Instance.new("UICorner", TpLobbyButton).CornerRadius = UDim.new(0, 8)
+-- INFINITE YIELD BUTTON (Reemplazo de los teleports de mapa/lobby)
+local InfYieldButton = Instance.new("TextButton")
+InfYieldButton.Size = UDim2.new(0, 360, 0, 42)
+InfYieldButton.Position = UDim2.new(0, 0, 0, 104)
+InfYieldButton.Text = "⚡ Load Infinite Yield (IY)"
+InfYieldButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfYieldButton.TextSize = 14
+InfYieldButton.Font = SelectedFont
+InfYieldButton.BackgroundColor3 = Color3.fromRGB(150, 0, 200)
+InfYieldButton.ZIndex = 3
+InfYieldButton.Parent = Container2
+Instance.new("UICorner", InfYieldButton).CornerRadius = UDim.new(0, 8)
 
 local FlingMurderButton = Instance.new("TextButton")
 FlingMurderButton.Size = UDim2.new(0, 172, 0, 42)
-FlingMurderButton.Position = UDim2.new(0, 0, 0, 208)
+FlingMurderButton.Position = UDim2.new(0, 0, 0, 156)
 FlingMurderButton.Text = "Fling Murderer"
 FlingMurderButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 FlingMurderButton.TextSize = 13
@@ -384,7 +373,7 @@ Instance.new("UICorner", FlingMurderButton).CornerRadius = UDim.new(0, 8)
 
 local FlingSheriffButton = Instance.new("TextButton")
 FlingSheriffButton.Size = UDim2.new(0, 172, 0, 42)
-FlingSheriffButton.Position = UDim2.new(1, -172, 0, 208)
+FlingSheriffButton.Position = UDim2.new(1, -172, 0, 156)
 FlingSheriffButton.Text = "Fling Sheriff"
 FlingSheriffButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 FlingSheriffButton.TextSize = 13
@@ -396,7 +385,7 @@ Instance.new("UICorner", FlingSheriffButton).CornerRadius = UDim.new(0, 8)
 
 local TpPlayerButton = Instance.new("TextButton")
 TpPlayerButton.Size = UDim2.new(0, 360, 0, 42)
-TpPlayerButton.Position = UDim2.new(0, 0, 0, 260)
+TpPlayerButton.Position = UDim2.new(0, 0, 0, 208)
 TpPlayerButton.Text = "📍 Teleport to Random Player"
 TpPlayerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TpPlayerButton.TextSize = 13
@@ -766,7 +755,7 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 -- ==============================================================================
--- UTILITIES & CORRECTED TELEPORTS (Map & Lobby Fixed)
+-- UTILITIES & INFINITE YIELD EXECUTOR
 -- ==============================================================================
 RejoinButton.MouseButton1Click:Connect(function()
 	local TeleportService = game:GetService("TeleportService")
@@ -814,56 +803,11 @@ TpGunButton.MouseButton1Click:Connect(function()
 	end
 end)
 
--- TELEPORT TO MAP CORREGIDO (Busca superficies sólidas dentro del mapa sin mandarte al cielo)
-TpMapButton.MouseButton1Click:Connect(function()
-	local character = LocalPlayer.Character
-	local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then return end
-
-	local mapFolder = workspace:FindFirstChild("Map") or workspace:FindFirstChild("CurrentMap")
-	if mapFolder then
-		for _, part in pairs(mapFolder:GetDescendants()) do
-			if part:IsA("BasePart") and part.Size.Y > 1 and part.Transparency < 1 then
-				rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
-				break
-			end
-		end
-	else
-		-- Búsqueda alternativa si no hay carpeta fija de mapa en MM2
-		for _, obj in pairs(workspace:GetChildren()) do
-			if obj:IsA("Model") and obj.Name ~= "Terrain" and not Players:GetPlayerFromCharacter(obj) then
-				local part = obj:FindFirstChildWhichIsA("BasePart", true)
-				if part then
-					rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
-					break
-				end
-			end
-		end
-	end
-end)
-
--- TELEPORT TO LOBBY CORREGIDO (Busca la zona de reaparición o spawns seguros del lobby)
-TpLobbyButton.MouseButton1Click:Connect(function()
-	local character = LocalPlayer.Character
-	local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then return end
-
-	local lobbyFolder = workspace:FindFirstChild("Lobby") or workspace:FindFirstChild("SpawnLocation")
-	if lobbyFolder then
-		if lobbyFolder:IsA("BasePart") then
-			rootPart.CFrame = lobbyFolder.CFrame + Vector3.new(0, 5, 0)
-		else
-			for _, part in pairs(lobbyFolder:GetDescendants()) do
-				if part:IsA("BasePart") then
-					rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
-					break
-				end
-			end
-		end
-	else
-		-- Ubicación por defecto segura en el centro inferior de MM2 si no encuentra el lobby
-		rootPart.CFrame = CFrame.new(0, 10, 0)
-	end
+-- Botón para cargar Infinite Yield de golpe
+InfYieldButton.MouseButton1Click:Connect(function()
+	pcall(function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	end)
 end)
 
 TpPlayerButton.MouseButton1Click:Connect(function()
@@ -951,19 +895,24 @@ end)
 local currentEspHighlights = {}
 
 local function cleanEsp()
-	for _, inst in pairs(currentEspHighlights) do
-		if inst then inst:Destroy() end
-	end
-	currentEspHighlights = {}
+	local success, err = pcall(function()
+		for _, inst in pairs(currentEspHighlights) do
+			if inst then inst:Destroy() end
+		end
+		currentEspHighlights = {}
+	end)
 end
 
 local function getMM2Role(player)
-	if player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife")) then
-		return "Murderer"
-	elseif player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun")) then
-		return "Sheriff"
-	end
-	return "Innocent"
+	local success, result = pcall(function()
+		if player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife")) then
+			return "Murderer"
+		elseif player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun")) then
+			return "Sheriff"
+		end
+		return "Innocent"
+	end)
+	return success and result or "Innocent"
 end
 
 task.spawn(function()
@@ -971,43 +920,45 @@ task.spawn(function()
 		if espActive then
 			cleanEsp()
 			for _, p in pairs(Players:GetPlayers()) do
-				if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-					local role = getMM2Role(p)
-					local roleColor = Color3.fromRGB(0, 255, 100)
+				pcall(function()
+					if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+						local role = getMM2Role(p)
+						local roleColor = Color3.fromRGB(0, 255, 100)
 
-					if role == "Murderer" then
-						roleColor = Color3.fromRGB(255, 0, 0)
-					elseif role == "Sheriff" then
-						roleColor = Color3.fromRGB(0, 100, 255)
+						if role == "Murderer" then
+							roleColor = Color3.fromRGB(255, 0, 0)
+						elseif role == "Sheriff" then
+							roleColor = Color3.fromRGB(0, 100, 255)
+						end
+
+						local Highlight = Instance.new("Highlight")
+						Highlight.Name = "StarESP"
+						Highlight.FillColor = roleColor
+						Highlight.FillTransparency = 0.6
+						Highlight.OutlineColor = roleColor
+						Highlight.OutlineTransparency = 0.1
+						Highlight.Adornee = p.Character
+						Highlight.Parent = ScreenGui
+						table.insert(currentEspHighlights, Highlight)
+
+						local Billboard = Instance.new("BillboardGui")
+						Billboard.Size = UDim2.new(0, 100, 0, 30)
+						Billboard.AlwaysOnTop = true
+						Billboard.Adornee = p.Character:FindFirstChild("Head")
+						Billboard.ExtentsOffset = Vector3.new(0, 2.5, 0)
+
+						local Label = Instance.new("TextLabel", Billboard)
+						Label.Size = UDim2.new(1, 0, 1, 0)
+						Label.BackgroundTransparency = 1
+						Label.Text = p.Name .. " [" .. role .. "]"
+						Label.TextColor3 = roleColor
+						Label.TextSize = 14
+						Label.Font = SelectedFont
+
+						Billboard.Parent = ScreenGui
+						table.insert(currentEspHighlights, Billboard)
 					end
-
-					local Highlight = Instance.new("Highlight")
-					Highlight.Name = "StarESP"
-					Highlight.FillColor = roleColor
-					Highlight.FillTransparency = 0.6
-					Highlight.OutlineColor = roleColor
-					Highlight.OutlineTransparency = 0.1
-					Highlight.Adornee = p.Character
-					Highlight.Parent = ScreenGui
-					table.insert(currentEspHighlights, Highlight)
-
-					local Billboard = Instance.new("BillboardGui")
-					Billboard.Size = UDim2.new(0, 100, 0, 30)
-					Billboard.AlwaysOnTop = true
-					Billboard.Adornee = p.Character:FindFirstChild("Head")
-					Billboard.ExtentsOffset = Vector3.new(0, 2.5, 0)
-
-					local Label = Instance.new("TextLabel", Billboard)
-					Label.Size = UDim2.new(1, 0, 1, 0)
-					Label.BackgroundTransparency = 1
-					Label.Text = p.Name .. " [" .. role .. "]"
-					Label.TextColor3 = roleColor
-					Label.TextSize = 14
-					Label.Font = SelectedFont
-
-					Billboard.Parent = ScreenGui
-					table.insert(currentEspHighlights, Billboard)
-				end
+				end)
 			end
 		end
 	end
@@ -1026,7 +977,7 @@ MM2EspButton.MouseButton1Click:Connect(function()
 end)
 
 --- ==========================================
---- UNIVERSAL FLING ENGINE (FIXED: Target gets flung, not you)
+--- CLASSIC YARHAM-STYLE FLING ENGINE
 --- ==========================================
 local function executeFling(targetPlayer)
 	if not targetPlayer or not targetPlayer.Character then return end
@@ -1043,28 +994,44 @@ local function executeFling(targetPlayer)
 	myHumanoid.PlatformStand = true
 
 	local bv = Instance.new("BodyVelocity")
+	bv.Name = "StarFlingVelocity"
 	bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-	bv.Velocity = Vector3.new(9e9, 9e9, 9e9)
+	bv.Velocity = Vector3.new(0, 0, 0)
 	bv.Parent = myRoot
 
 	local bav = Instance.new("BodyAngularVelocity")
+	bav.Name = "StarFlingAngular"
 	bav.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
-	bav.AngularVelocity = Vector3.new(0, 9e9, 0)
+	bav.AngularVelocity = Vector3.new(30000, 30000, 30000)
 	bav.Parent = myRoot
 
-	local endTime = os.clock() + 0.5
-	while os.clock() < endTime do
-		if targetRoot and myRoot then
-			myRoot.CFrame = targetRoot.CFrame
-			myRoot.Velocity = Vector3.new(9e9, 9e9, 9e9)
-		end
-		task.wait()
-	end
-
-	bv:Destroy()
-	bav:Destroy()
-	myHumanoid.PlatformStand = originalPlatformStand
+	local connection
+	local startTime = os.clock()
 	
+	connection = RunService.RenderStepped:Connect(function()
+		if targetRoot and myRoot and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+			targetRoot = targetPlayer.Character.HumanoidRootPart
+			local randomOffset = Vector3.new(math.random(-2, 2), math.random(0, 3), math.random(-2, 2))
+			myRoot.CFrame = targetRoot.CFrame + randomOffset
+			bv.Velocity = Vector3.new(math.random(-8000, 8000), 8000, math.random(-8000, 8000))
+		else
+			if connection then connection:Disconnect() end
+		end
+		
+		if os.clock() - startTime > 0.6 then
+			if connection then connection:Disconnect() end
+		end
+	end)
+
+	task.wait(0.65)
+	if connection then connection:Disconnect() end
+
+	pcall(function()
+		bv:Destroy()
+		bav:Destroy()
+	end)
+
+	myHumanoid.PlatformStand = originalPlatformStand
 	task.wait(0.1)
 	myRoot.CFrame = originalOldPos
 end
