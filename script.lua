@@ -1,5 +1,5 @@
 -- ==============================================================================
--- 🌠 Star Executor - Ultimate Version (True Camera-Look Fly & Instant Character Size)
+-- 🌠 Star Executor - Arceus X Compatible Version (Fixed Fling & Teleports)
 -- ==============================================================================
 
 if not game:IsLoaded() then 
@@ -453,7 +453,7 @@ for i = 1, 35 do
 end
 
 --- ==========================================
---- DRAGGABLE SYSTEM
+--- DRAGGABLE SYSTEM (Fully Mobile/Arceus X Friendly)
 --- ==========================================
 local function makeDraggable(guiObject)
 	local dragging, dragInput, dragStart, startPos
@@ -558,7 +558,7 @@ JumpButton.MouseButton1Click:Connect(function()
 end)
 
 -- ==============================================================================
--- 🚀 CLASSIC /FLY ENGINE (Camera-Look Direct, No Inversion, Look where you go)
+-- 🚀 TRUE CLASSIC /FLY ENGINE
 -- ==============================================================================
 FlyButton.MouseButton1Click:Connect(function()
 	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -584,32 +584,31 @@ FlyButton.MouseButton1Click:Connect(function()
 
 		humanoid.PlatformStand = true
 		local camera = workspace.CurrentCamera
-
+		
 		flyConnection = RunService.RenderStepped:Connect(function()
 			if rootPart and flyVelocity and flyGyro then
 				flyGyro.cframe = camera.CFrame
-
+				
 				local moveDir = humanoid.MoveDirection
 				local speedVal = 50
-
+				
 				if moveDir.Magnitude > 0 then
-					-- Motor /fly clásico exacto: utiliza la dirección en la que mira la cámara sin inversiones
 					local camLook = camera.CFrame.LookVector
 					local camRight = camera.CFrame.RightVector
-
+					
 					local targetMove = Vector3.new(0, 0, 0)
 					if moveDir.Z < 0 then
 						targetMove = targetMove + camLook
 					elseif moveDir.Z > 0 then
 						targetMove = targetMove - camLook
 					end
-
+					
 					if moveDir.X > 0 then
 						targetMove = targetMove + camRight
 					elseif moveDir.X < 0 then
 						targetMove = targetMove - camRight
 					end
-
+					
 					flyVelocity.velocity = targetMove.Unit * speedVal
 				else
 					flyVelocity.velocity = Vector3.new(0, 0, 0)
@@ -706,14 +705,12 @@ local function setCharacterScale(scaleMultiplier)
 	if not humanoid then return end
 
 	pcall(function()
-		-- 1. Modificar valores de escala estándar de Roblox (R15)
 		for _, desc in pairs(humanoid:GetChildren()) do
 			if desc:IsA("NumberValue") and (desc.Name:find("Scale") or desc.Name:find("Height") or desc.Name:find("Width") or desc.Name:find("Head")) then
 				desc.Value = scaleMultiplier
 			end
 		end
-
-		-- 2. Modificar tamaño instantáneo de las partes para soporte universal de rigs
+		
 		local rootPart = character:FindFirstChild("HumanoidRootPart")
 		if rootPart then
 			for _, part in pairs(character:GetDescendants()) do
@@ -724,7 +721,7 @@ local function setCharacterScale(scaleMultiplier)
 						origSize.Value = part.Size
 						origSize.Parent = part
 					end
-
+					
 					if part.Name ~= "HumanoidRootPart" and part:FindFirstChild("OriginalSize") then
 						part.Size = part.OriginalSize.Value * scaleMultiplier
 					end
@@ -758,7 +755,7 @@ UserInputService.InputChanged:Connect(function(input)
 		SizeBarFill.Size = UDim2.new(relativeX, 0, 1, 0)
 		SizeKnob.Position = UDim2.new(relativeX, -6, 0.5, -14)
 
-		local scaleValue = 0.3 + (relativeX * 2.7) -- Range: 0.3x to 3.0x
+		local scaleValue = 0.3 + (relativeX * 2.7)
 		if math.abs(relativeX - 0.5) < 0.03 then
 			scaleValue = 1.0
 		end
@@ -769,7 +766,7 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 -- ==============================================================================
--- UTILITIES & SEPARATED TELEPORTS (Map & Lobby)
+-- UTILITIES & CORRECTED TELEPORTS (Map & Lobby Fixed)
 -- ==============================================================================
 RejoinButton.MouseButton1Click:Connect(function()
 	local TeleportService = game:GetService("TeleportService")
@@ -817,38 +814,54 @@ TpGunButton.MouseButton1Click:Connect(function()
 	end
 end)
 
+-- TELEPORT TO MAP CORREGIDO (Busca superficies sólidas dentro del mapa sin mandarte al cielo)
 TpMapButton.MouseButton1Click:Connect(function()
 	local character = LocalPlayer.Character
 	local rootPart = character and character:FindFirstChild("HumanoidRootPart")
 	if not rootPart then return end
 
-	local mapFolder = workspace:FindFirstChild("Map")
+	local mapFolder = workspace:FindFirstChild("Map") or workspace:FindFirstChild("CurrentMap")
 	if mapFolder then
 		for _, part in pairs(mapFolder:GetDescendants()) do
-			if part:IsA("BasePart") then
+			if part:IsA("BasePart") and part.Size.Y > 1 and part.Transparency < 1 then
 				rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
 				break
 			end
 		end
 	else
-		rootPart.CFrame = CFrame.new(0, 50, 0)
+		-- Búsqueda alternativa si no hay carpeta fija de mapa en MM2
+		for _, obj in pairs(workspace:GetChildren()) do
+			if obj:IsA("Model") and obj.Name ~= "Terrain" and not Players:GetPlayerFromCharacter(obj) then
+				local part = obj:FindFirstChildWhichIsA("BasePart", true)
+				if part then
+					rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
+					break
+				end
+			end
+		end
 	end
 end)
 
+-- TELEPORT TO LOBBY CORREGIDO (Busca la zona de reaparición o spawns seguros del lobby)
 TpLobbyButton.MouseButton1Click:Connect(function()
 	local character = LocalPlayer.Character
 	local rootPart = character and character:FindFirstChild("HumanoidRootPart")
 	if not rootPart then return end
 
-	local lobbyFolder = workspace:FindFirstChild("Lobby")
+	local lobbyFolder = workspace:FindFirstChild("Lobby") or workspace:FindFirstChild("SpawnLocation")
 	if lobbyFolder then
-		for _, part in pairs(lobbyFolder:GetDescendants()) do
-			if part:IsA("BasePart") then
-				rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
-				break
+		if lobbyFolder:IsA("BasePart") then
+			rootPart.CFrame = lobbyFolder.CFrame + Vector3.new(0, 5, 0)
+		else
+			for _, part in pairs(lobbyFolder:GetDescendants()) do
+				if part:IsA("BasePart") then
+					rootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
+					break
+				end
 			end
 		end
 	else
+		-- Ubicación por defecto segura en el centro inferior de MM2 si no encuentra el lobby
 		rootPart.CFrame = CFrame.new(0, 10, 0)
 	end
 end)
@@ -1013,7 +1026,7 @@ MM2EspButton.MouseButton1Click:Connect(function()
 end)
 
 --- ==========================================
---- UNIVERSAL FLING ENGINE
+--- UNIVERSAL FLING ENGINE (FIXED: Target gets flung, not you)
 --- ==========================================
 local function executeFling(targetPlayer)
 	if not targetPlayer or not targetPlayer.Character then return end
@@ -1027,23 +1040,31 @@ local function executeFling(targetPlayer)
 	local originalOldPos = myRoot.CFrame
 	local originalPlatformStand = myHumanoid.PlatformStand
 
-	local FlingVelocity = Instance.new("BodyVelocity")
-	FlingVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-	FlingVelocity.Velocity = Vector3.new(500000, 500000, 500000)
-	FlingVelocity.Parent = myRoot
-
 	myHumanoid.PlatformStand = true
 
-	local endTime = os.clock() + 0.4
+	local bv = Instance.new("BodyVelocity")
+	bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+	bv.Velocity = Vector3.new(9e9, 9e9, 9e9)
+	bv.Parent = myRoot
+
+	local bav = Instance.new("BodyAngularVelocity")
+	bav.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+	bav.AngularVelocity = Vector3.new(0, 9e9, 0)
+	bav.Parent = myRoot
+
+	local endTime = os.clock() + 0.5
 	while os.clock() < endTime do
 		if targetRoot and myRoot then
-			myRoot.CFrame = targetRoot.CFrame * CFrame.new(math.random(-1,1)/10, 0, math.random(-1,1)/10)
+			myRoot.CFrame = targetRoot.CFrame
+			myRoot.Velocity = Vector3.new(9e9, 9e9, 9e9)
 		end
 		task.wait()
 	end
 
-	FlingVelocity:Destroy()
+	bv:Destroy()
+	bav:Destroy()
 	myHumanoid.PlatformStand = originalPlatformStand
+	
 	task.wait(0.1)
 	myRoot.CFrame = originalOldPos
 end
